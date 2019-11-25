@@ -11,7 +11,6 @@ ENV TZ ${TZ}
 RUN apk update \
     && apk --no-cache add curl tree tzdata postgresql-dev postgresql-client icu-dev libzip-dev libjpeg-turbo-dev libpng-dev freetype-dev\
     && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
-    && apk del tzdata \
     && rm -rf /var/cache/apk/*
 
 # php ext
