@@ -26,17 +26,6 @@ RUN docker-php-ext-install opcache pcntl bcmath exif mysqli pdo_mysql && \
     docker-php-ext-enable protobuf && \
     pecl install swoole && \
     docker-php-ext-enable swoole && \
-    # amqp 
-    curl -L -o /tmp/rabbitmq-c.tar.gz https://github.com/alanxz/rabbitmq-c/archive/master.tar.gz && \
-    mkdir -p rabbitmq-c && \
-    tar -C rabbitmq-c -zxvf /tmp/rabbitmq-c.tar.gz --strip 1 && \
-    cd rabbitmq-c/ && \
-    mkdir _build && cd _build/ && \
-    cmake .. && \
-    cmake --build . --target install && \
-    pecl install amqp && \
-    docker-php-ext-enable amqp && \
-    docker-php-ext-install sockets && \
     rm -rf /tmp/pear && \
     rm -rf /var/cache/apk/*
 
