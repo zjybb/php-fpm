@@ -13,7 +13,7 @@ RUN apk update && \
     cp /usr/share/zoneinfo/${TZ} /etc/localtime
 
 RUN docker-php-ext-install opcache pcntl bcmath exif mysqli pdo_mysql && \
-    apk --no-cache add icu-dev g++ && \
+    apk --no-cache add icu-dev cmake && \
     docker-php-ext-configure intl && \
     docker-php-ext-install intl && \
     docker-php-ext-configure zip \
