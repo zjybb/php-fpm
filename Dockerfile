@@ -33,7 +33,7 @@ RUN apk update && \
     pecl install swoole && \
     docker-php-ext-enable swoole && \
     # clear cache
-    apk del gcc g++ make autoconf freetype-dev libpng-dev libjpeg-turbo-dev libwebp-dev && \
+    apk del gcc g++ make autoconf && \
     rm -rf /tmp/pear && \
     rm -rf /var/cache/apk/*
 
