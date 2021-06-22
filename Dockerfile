@@ -41,14 +41,6 @@ COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY ./pool.ini /usr/local/etc/php/php-fpm.d/pool.ini
 COPY ./php.ini /usr/local/etc/php/php.ini
 
-ARG PUID=1000
-ENV PUID ${PUID}
-ARG PGID=1000
-ENV PGID ${PGID}
-
-RUN groupmod -o -g ${PGID} www-data && \
-    usermod -o -u ${PUID} -g www-data www-data
-
 EXPOSE 9000
 
 WORKDIR /var/www
