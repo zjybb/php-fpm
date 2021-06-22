@@ -7,17 +7,19 @@ LABEL maintainer="zhujiayan <xz@zjybb.com>"
 ARG TZ=Asia/Shanghai
 ENV TZ ${TZ}
 
-RUN apk update && \
-    apk --no-cache add curl tree tzdata libzip-dev icu-dev zip unzip && \
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+    apk update && \
+    apk --no-cache add gcc g++ make autoconf curl tree tzdata libzip-dev icu-dev zip unzip libpng libpng-dev libwebp libwebp-dev freetype-dev && \
     cp /usr/share/zoneinfo/${TZ} /etc/localtime
 
 RUN docker-php-ext-install opcache pcntl bcmath exif mysqli pdo_mysql && \
     docker-php-ext-configure intl && \
     docker-php-ext-install intl && \
     docker-php-ext-configure zip && \
-    docker-php-ext-install zip
-
-RUN apk --no-cache add gcc g++ make autoconf && \
+    docker-php-ext-install zip && \
+    docker-php-ext-configure gd --with-webp=/usr/include/webp --with-jpeg=/usr/include --with-freetype=/usr/include/freetype2/ && \
+    docker-php-ext-install gd && \
+    # pecl
     pecl channel-update pecl.php.net && \
     # redis
     printf "\n" | pecl install -o -f redis && \
