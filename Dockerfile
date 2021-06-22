@@ -7,12 +7,11 @@ LABEL maintainer="zhujiayan <xz@zjybb.com>"
 ARG TZ=Asia/Shanghai
 ENV TZ ${TZ}
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
-    apk update && \
-    apk --no-cache add gcc g++ make autoconf curl tree tzdata libzip-dev icu-dev zip unzip libpng libpng-dev libwebp libwebp-dev freetype-dev && \
-    cp /usr/share/zoneinfo/${TZ} /etc/localtime
-
-RUN docker-php-ext-install opcache pcntl bcmath exif mysqli pdo_mysql && \
+RUN apk update && \
+    apk --no-cache add gcc g++ make autoconf curl tree tzdata libzip-dev icu-dev zip unzip libpng-dev libwebp-dev freetype-dev libjpeg-turbo-dev && \
+    cp /usr/share/zoneinfo/${TZ} /etc/localtime && \
+    # php-ext
+    docker-php-ext-install opcache pcntl bcmath exif mysqli pdo_mysql && \
     docker-php-ext-configure intl && \
     docker-php-ext-install intl && \
     docker-php-ext-configure zip && \
@@ -34,7 +33,7 @@ RUN docker-php-ext-install opcache pcntl bcmath exif mysqli pdo_mysql && \
     pecl install swoole && \
     docker-php-ext-enable swoole && \
     # clear cache
-    apk del gcc g++ make autoconf && \
+    apk del gcc g++ make autoconf freetype-dev libpng-dev libjpeg-turbo-dev libwebp-dev && \
     rm -rf /tmp/pear && \
     rm -rf /var/cache/apk/*
 
