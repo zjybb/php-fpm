@@ -38,7 +38,7 @@ RUN apk update && \
     rm -rf /var/cache/apk/*
 
 COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-COPY ./pool.ini /usr/local/etc/php-fpm.d/xpool.ini
+COPY ./pool.conf /usr/local/etc/php-fpm.d/xpool.conf
 COPY ./php.ini /usr/local/etc/php/php.ini
 
 EXPOSE 9000
