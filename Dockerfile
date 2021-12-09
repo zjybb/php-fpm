@@ -7,7 +7,8 @@ LABEL maintainer="zhujiayan <xz@zjybb.com>"
 ARG TZ=Asia/Shanghai
 ENV TZ ${TZ}
 
-RUN apk update && \
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+    apk update && \
     apk --no-cache add gcc g++ make autoconf curl tree tzdata libzip-dev icu-dev zip unzip libpng-dev libwebp-dev freetype-dev libjpeg-turbo-dev && \
     cp /usr/share/zoneinfo/${TZ} /etc/localtime && \
     # php-ext
@@ -32,6 +33,9 @@ RUN apk update && \
     # swoole
     pecl install swoole && \
     docker-php-ext-enable swoole && \
+    # xlswriter
+    pecl install xlswriter && \
+    docker-php-ext-enable xlswriter && \
     # clear cache
     apk del gcc g++ make autoconf && \
     rm -rf /tmp/pear && \
